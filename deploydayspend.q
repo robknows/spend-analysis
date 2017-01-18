@@ -2,7 +2,7 @@
 \ shoptrip (amount, date, keywords)
 
 \ keywords:
-\ imogen, gym, food, eatingout, snacks, milk, travel, holiday, bike, devices, gift, toiletries, laundry, stationary, idiocy, medicine, book, alcohol, clothes
+\ none, imogen, gym, food, eatingout, snacks, milk, travel, holiday, bike, devices, gift, toiletries, laundry, stationary, idiocy, medicine, book, alcohol, clothes
 
 shoptrip: value`:tables/shoptrip
 
