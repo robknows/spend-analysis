@@ -1,3 +1,5 @@
+#!/home/rob/q/l32/q
+
 \ format:
 \ shoptrip (amount, date, keywords)
 

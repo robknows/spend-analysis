@@ -15,7 +15,8 @@ To insert new data, in the q REPL, run (replacing the fake data with your actual
 
 `shoptrip insert (amount: 1 2 3 ... ;date: 2017.01.18 2017.01.19 ... ;keywords:(enlist `keyword1`keyword2),(enlist `x`y) ... )
 `:tables/shoptrip set shoptrip \ Depending on which dir you opened q from
-\l deploydayspend.q
+
+Then you need to update the dayspend table by running ./deploydayspend.q
 
 ### Graphs
 At the moment the only graphs you can create are plots for a set of x values against a set of y values.
