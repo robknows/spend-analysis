@@ -55,12 +55,12 @@ save `:graphdata/moving_avg_food_spend_per_day.txt
 
 imogen_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_food: dailycategoryspend {`imogen in x})
+  amount_spent_on_tiny_girl: dailycategoryspend {`imogen in x})
 save `:graphdata/imogen_spend_per_day.txt
 
 travel_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_food: dailycategoryspend {`travel in x})
+  amount_spent_on_travel: dailycategoryspend {`travel in x})
 save `:graphdata/travel_spend_per_day.txt
 
 \\
