@@ -4,19 +4,18 @@
 shoptrip: value `:../tables/shoptrip
 dayspend: value `:../tables/dayspend
 
-\ Applies a filter function, x, and gets the relevant indices
+\ Functions
+
 categoryindices: {where x each shoptrip[`keywords]}
+shoptripindices:til count shoptrip
+dailycategoryspend: {
+  categoryspends:?[shoptripindices in categoryindices x;exec amount from shoptrip;0f];
+  shopdates: -[exec date from shoptrip;2016.10.01];
+  value exec sum amount by date from ([] date:shopdates;amount:categoryspends)}
 
 \ Constants
 daycount: exec date from dayspend - 2016.10.01
 totals: exec total from dayspend
-
-\ TEST
-indexedshoptrips:til count shoptrip
-foodindices: categoryindices {`food in x}
-foodspends:?[indexedshoptrips in foodindices;exec amount from shoptrip;0f]
-shopdates: -[exec date from shoptrip;2016.10.01]
-daily_food_spend:value exec sum amount by date from ([] date:shopdates;amount:foodspends)
 
 \ Data entries
 p05_exp_weighted_moving_avg_daily_spending: ([]
@@ -46,7 +45,22 @@ save `:graphdata/daily_spending.txt
 
 food_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_food: daily_food_spend)
+  amount_spent_on_food: dailycategoryspend {`food in x})
 save `:graphdata/food_spend_per_day.txt
+
+moving_avg_food_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  mavg_amount_spent_on_food: mavg[count dcs; dcs:dailycategoryspend {`food in x}])
+save `:graphdata/moving_avg_food_spend_per_day.txt
+
+imogen_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  amount_spent_on_food: dailycategoryspend {`imogen in x})
+save `:graphdata/imogen_spend_per_day.txt
+
+travel_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  amount_spent_on_food: dailycategoryspend {`travel in x})
+save `:graphdata/travel_spend_per_day.txt
 
 \\
