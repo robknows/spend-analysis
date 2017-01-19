@@ -14,3 +14,5 @@ dayspend: ([]
   numberofspends:value exec count amount by date from shoptrip)
 
 save `:tables/dayspend
+
+\\
