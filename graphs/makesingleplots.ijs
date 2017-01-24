@@ -2,26 +2,29 @@
 require 'plot'
 
 files =: 2}.ARGV
-
 readfile =: 1!:1
 
 xcol =: i.&TAB {. ]
 ycol =: (>:@:i.&TAB) }. (i.&' ' {. ])
-
 parsenum =: 0&".@:(i.&' ' {. ])
-  
+fn =: ((>:@:i.&'/') }. (i.&'.' {. ]))@:>
+ls =: ] ;. _2
+onhead =: @:(0&{)
+ontail =: @:(1&}.)
+parsetail =: parsenum ontail
+
 createpdf =: 3 : 0
   txtfile =: y
-  filename =: ((>:@:i.&'/') }. (i.&'.' {. ])) (>txtfile)
+  filename =: fn txtfile
 
   rawtxt =: readfile txtfile
-  lines =: (] ;. _2) rawtxt
+  lines =: ls rawtxt
 
-  xlabel =: xcol 0{lines
-  ylabel =: ycol 0{lines
-
-  xs =: parsenum 1}.xcol"1 lines
-  ys =: parsenum 1}.ycol"1 lines
+  xlabel =: xcol onhead lines
+  ylabel =: ycol onhead lines
+  
+  xs =: parsetail xcol"1 lines
+  ys =: parsetail ycol"1 lines
 
   pd 'reset'
   pd 'visible 0'

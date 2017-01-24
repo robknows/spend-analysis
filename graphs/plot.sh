@@ -1,4 +1,4 @@
 #!/bin/bash
 ./saveplotdata.q
-graphdata=`ls graphdata/*.txt`
-./creategraphpdf.ijs $graphdata
+singleplotdata=`ls singleplotdata/*.txt`
+./makesingleplots.ijs $singleplotdata
