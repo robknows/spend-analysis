@@ -21,11 +21,9 @@ makewindow =: 3 : 0
 )
 
 makelabels =: 3 : 0
-  lines =: y
-  xlabel =: xcol onhead lines
-  ylabel =: ycol onhead lines
-  pd 'xcaption ',xlabel
-  pd 'ycaption ',ylabel
+  NB. Generalised axis labels
+  pd 'xcaption days_since_oct_1_2016'
+  pd 'ycaption associated_expenditure(£)'
 )
 
 makeplot =: 3 : 0
@@ -58,10 +56,8 @@ createpdf =: 3 : 0
   filedataB =: lns readfile boxedfnB
   filenameB =: fn boxedfnB
   
-  makewindow''
-  
-  NB. This will improve
-  makelabels filedataA
+  makewindow''  
+  makelabels''
 
   pd 'keycolor blue,red'
   makekey filenameA,',',filenameB
