@@ -13,7 +13,7 @@ tag in `none.
 
 To insert new data, in the q REPL, run (replacing the fake data with your actual data of course):
 
-`shoptrip insert (amount: 1 2 3 ... ;date: 2017.01.18 2017.01.19 ... ;keywords:(enlist `keyword1`keyword2),(enlist `x`y) ... )
+`shoptrip insert (amount: 1 2 3 ... ;date: 2017.01.18 2017.01.19 ... ;keywords:(enlist `keyword),(`x;`y) ... )
 `:tables/shoptrip set shoptrip \ Depending on which dir you opened q from
 
 Then you need to update the dayspend table by running ./deploydayspend.q
