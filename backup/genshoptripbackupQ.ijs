@@ -7,6 +7,7 @@ writefile =: 1!:2
 rawtxt =: readfile boxedfn
 lines =: (] ;. _2) rawtxt
 
+droplastsemicolon =: ' '&(([`( >./@:I.@:e.&';'@:])`])})
 replace =: ((>@:(1&{)@:])`(I.@:([ e. >@:(0&{)@:]))`[)}
 taketofirst =: i. {. [
 headcol =: i.&(9{a.) {. ]
@@ -21,7 +22,7 @@ tablecol =: 4 : '(col&y)"1 x'
 
 annotatefloat =: 'f'&([`(i.&' '@:])`]})
 amountheader =: (0{lines) col 0
-amountdata =: , (,&';'@:annotatefloat@:((>:@:i.&' ') {. ]))"1 ((1}.lines) tablecol 0)
+amountdata =: droplastsemicolon@:, (,&';'@:annotatefloat@:((>:@:i.&' ') {. ]))"1 ((1}.lines) tablecol 0)
 
 dateheader =: (0{lines) col 1
 datedata =: , ((,&' ')@:replace&('-';'.'))"1 ((1}.lines) tablecol 1)
@@ -34,7 +35,7 @@ multiplekws =: >&1@:(+/@:e.)&'`'
 multiplekwenlists =: (I. multiplekws"1 allenlists) { allenlists
 amendedmultkwenlists =: ('('&,@:(8&}.))"1 multiplekwenlists
 
-NB. UGLY HACK INCOMING
+NB. UGLY HACK
 counter =: 0
 NB. x=allenlists
 singleamend =: 3 : 0
@@ -48,7 +49,7 @@ counter =: 0
 
 finalenlists =: singleamend^:(# amendedmultkwenlists) allenlists
 NB. Fuck that was tough
-keywordsdata =: , (,&';')"1 finalenlists
+keywordsdata =: droplastsemicolon@:, ((,&';')"1 finalenlists)
 
 NB. x = column name
 NB. y = semi-colon seperated column items
