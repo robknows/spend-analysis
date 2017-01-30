@@ -1,10 +1,40 @@
 #!/home/rob/q/l32/q
 
-\ format:
-\ shoptrip (amount, date, keywords)
+/
+format:
+shoptrip (amount, date, class, tag)
+dayspend (date, total, numberofspends)
+\
 
-\ keywords:
-\ none, imogen, gym, food, eatingout, snacks, milk, travel, holiday, bike, devices, gift, toiletries, laundry, stationary, idiocy, medicine, book, alcohol, clothes
+/
+class:
+alcohol
+bike
+book
+donation
+clothes
+devices
+eatingout
+food
+gift
+gym
+holiday
+laundry
+medicine
+milk
+none
+snacks
+stationary
+toiletries
+travel
+\
+
+/ 
+tag:
+charity
+idiocy
+imogen
+\ 
 
 shoptrip: value`:tables/shoptrip
 
