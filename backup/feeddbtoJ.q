@@ -2,13 +2,12 @@
 
 shoptrip: value`:../tables/shoptrip
 
-stringifyKws: {sv[","] string shoptrip[`keywords] x}
+ams: shoptrip[`amount]
+ds: shoptrip[`date]
+cs: shoptrip[`class]
+ts: `empty^shoptrip[`tag]
 
-kws:stringifyKws each til count shoptrip
-ds: exec date from shoptrip
-ams: exec amount from shoptrip
-
-prepped: ([] amount:ams; date:ds; keywords:kws)
+prepped: ([] amount:ams; date:ds; class:cs; tag:ts)
 
 save `:prepped.txt
 
