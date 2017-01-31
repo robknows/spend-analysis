@@ -5,13 +5,18 @@ shoptrip: value `:../tables/shoptrip
 dayspend: value `:../tables/dayspend
 
 \ Functions
-
-categoryindices: {where x each shoptrip[`keywords]}
+classindices: {where x each shoptrip[`class]}
 shoptripindices:til count shoptrip
-dailycategoryspend: {
-  categoryspends:?[shoptripindices in categoryindices x;exec amount from shoptrip;0f];
+dailyclassspend: {
+  classspends:?[shoptripindices in classindices x;exec amount from shoptrip;0f];
   shopdates: -[exec date from shoptrip;2016.10.01];
-  value exec sum amount by date from ([] date:shopdates;amount:categoryspends)}
+  value exec sum amount by date from ([] date:shopdates;amount:classspends)}
+
+tagindices: {where x each shoptrip[`tag]}
+dailytagspend: {
+  tagspends:?[shoptripindices in tagindices x;exec amount from shoptrip;0f];
+  shopdates: -[exec date from shoptrip;2016.10.01];
+  value exec sum amount by date from ([] date:shopdates;amount:tagspends)}
 
 \ Constants
 daycount: exec date from dayspend - 2016.10.01
@@ -45,52 +50,52 @@ save `:graphdata/daily_spending.txt
 
 food_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_food: dailycategoryspend {`food in x})
+  amount_spent_on_food: dailyclassspend {`food in x})
 save `:graphdata/food_spend_per_day.txt
 
 p05_exp_weighted_moving_avg_daily_food_spending: ([]
   days_since_oct_1_2016:daycount;
-  ewma:ema[.05;dailycategoryspend {`food in x}])
+  ewma:ema[.05;dailyclassspend {`food in x}])
 save `:graphdata/p05_exp_weighted_moving_avg_daily_food_spending.txt
 
 moving_avg_food_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  mavg_amount_spent_on_food: mavg[count dcs; dcs:dailycategoryspend {`food in x}])
+  mavg_amount_spent_on_food: mavg[count dcs; dcs:dailyclassspend {`food in x}])
 save `:graphdata/moving_avg_food_spend_per_day.txt
-
-imogen_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_tiny_girl: dailycategoryspend {`imogen in x})
-save `:graphdata/imogen_spend_per_day.txt
 
 travel_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_travel: dailycategoryspend {`travel in x})
+  amount_spent_on_travel: dailyclassspend {`travel in x})
 save `:graphdata/travel_spend_per_day.txt
 
 p1_exp_weighted_moving_avg_daily_travel_spending: ([]
   days_since_oct_1_2016:daycount;
-  ewma:ema[.1;dailycategoryspend {`travel in x}])
+  ewma:ema[.1;dailyclassspend {`travel in x}])
 save `:graphdata/p1_exp_weighted_moving_avg_daily_travel_spending.txt
 
 gym_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_gym: dailycategoryspend {`gym in x})
+  amount_spent_on_gym: dailyclassspend {`gym in x})
 save `:graphdata/gym_spend_per_day.txt
 
 milk_spend_per_milk_shop: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_shops_including_milk: dailycategoryspend {`milk in x})
+  amount_spent_on_shops_including_milk: dailyclassspend {`milk in x})
 save `:graphdata/milk_spend_per_milk_shop.txt
 
 eatingout_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_eatingout: dailycategoryspend {`eatingout in x})
+  amount_spent_on_eatingout: dailyclassspend {`eatingout in x})
 save `:graphdata/eatingout_spend_per_day.txt
 
 gift_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_gift: dailycategoryspend {`gift in x})
+  amount_spent_on_gift: dailyclassspend {`gift in x})
 save `:graphdata/gift_spend_per_day.txt
+
+imogen_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  amount_spent_on_tiny_girl: dailytagspend {`imogen in x})
+save `:graphdata/imogen_spend_per_day.txt
 
 \\
