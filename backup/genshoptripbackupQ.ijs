@@ -22,10 +22,10 @@ NB. x=A stringified table whose columns are seperated by tabs on each row
 NB. y=number of the column you want
 tablecol =: 4 : '(col&y)"1 x'
 
-annotatefloat =: 'f'&([`(i.&' '@:])`]})
+annotatefloat =: ('f'&([`(i.&' '@:])`]}))@:(,&' ')
 droplastsemicolon =: ' '&(([`( >./@:I.@:e.&';'@:])`])})
 amountheader =: headers col 0
-amountdata =: droplastsemicolon@:, (,&';'@:annotatefloat@:((>:@:i.&' ') {. ]))"1 (data tablecol 0)
+amountdata =: (droplastsemicolon@:, (,&';'@:annotatefloat)"1 (data tablecol 0)) remove ' '
 
 replace =: ((>@:(1&{)@:])`(I.@:([ e. >@:(0&{)@:]))`[)}
 dateheader =: headers col 1
@@ -50,8 +50,8 @@ tagdec =: tagheader itemsdeclaration tagdata
 
 columndefs =: amountdec,LF,datedec,LF,classdec,LF,tagdec
 
-tabledef =: 'backupshoptrip: ([] amount:amount_items ; date:date_items ; class:class_items ; tag:tag_items)'
-savetable =: 'save `:backupshoptrip'
+tabledef =: 'shoptripbackup: ([] amount:amount_items ; date:date_items ; class:class_items ; tag:tag_items)'
+savetable =: 'save `:shoptripbackup'
 exitcommand =: '\\'
 
 content =: hashbang,LF,columndefs,LF,tabledef,LF,savetable,LF,exitcommand
