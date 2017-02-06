@@ -23,7 +23,7 @@ laundry
 medicine
 milk
 none
-snacks
+snack
 stationary
 toiletries
 travel
