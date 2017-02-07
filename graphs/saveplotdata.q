@@ -18,6 +18,8 @@ dailytagspend: {
   shopdates: -[exec date from shoptrip;2016.10.01];
   value exec sum amount by date from ([] date:shopdates;amount:tagspends)}
 
+dayofweeknum: {6 7 1 2 3 4 5 x mod 7}
+
 \ Constants
 daycount: exec date from dayspend - 2016.10.01
 totals: exec total from dayspend
@@ -98,4 +100,9 @@ imogen_spend_per_day: ([]
   amount_spent_on_tiny_girl: dailytagspend {`imogen in x})
 save `:graphdata/imogen_spend_per_day.txt
 
+spending_by_day_of_week:
+  select sum total by day from
+    select day: dayofweeknum date,total from dayspend
+
+save `:graphdata/spending_by_day_of_week.txt
 \\
