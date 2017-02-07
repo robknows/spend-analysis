@@ -18,7 +18,11 @@ dailytagspend: {
   shopdates: -[exec date from shoptrip;2016.10.01];
   value exec sum amount by date from ([] date:shopdates;amount:tagspends)}
 
+\ x is integer version of a date
 dayofweeknum: {6 7 1 2 3 4 5 x mod 7}
+
+\ x is a date
+monthnum: {1 + ("i"$`month$x) mod 12}
 
 \ Constants
 daycount: exec date from dayspend - 2016.10.01
@@ -119,5 +123,12 @@ moving_total_spending: ([]
   days_since_oct_1_2016: daycount;
   moving_total: exec (+\) total from dayspend)
 save `:graphdata/moving_total_spending.txt
+
+avg_daily_spend_by_month: select avg total by month_number from select month_number:monthnum date,total from dayspend;
+empty_months: (1 + til 12) except exec month_number from avg_daily_spend_by_month;
+avg_daily_spend_by_month: 0!avg_daily_spend_by_month;
+`avg_daily_spend_by_month insert (month_number: empty_months; total: 0f);
+avg_daily_spend_by_month: asc avg_daily_spend_by_month;
+save `:graphdata/avg_daily_spend_by_month.txt
 
 \\
