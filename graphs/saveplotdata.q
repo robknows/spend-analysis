@@ -101,8 +101,18 @@ imogen_spend_per_day: ([]
 save `:graphdata/imogen_spend_per_day.txt
 
 spending_by_day_of_week:
-  select sum total by day from
+  select expenditure: sum total by day from
     select day: dayofweeknum date,total from dayspend
-
 save `:graphdata/spending_by_day_of_week.txt
+
+avg_number_of_spends_by_day_of_week:
+  select avg_number_of_spends: avg numberofspends by day from
+    select day: dayofweeknum date,numberofspends from dayspend
+save `:graphdata/avg_number_of_spends_by_day_of_week.txt
+
+total_spending: ([]
+  days_since_oct_1_2016: daycount;
+  moving_total: exec (+\) total from dayspend)
+save `:graphdata/total_spending.txt
+
 \\
