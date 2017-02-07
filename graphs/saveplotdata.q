@@ -100,19 +100,24 @@ imogen_spend_per_day: ([]
   amount_spent_on_tiny_girl: dailytagspend {`imogen in x})
 save `:graphdata/imogen_spend_per_day.txt
 
-spending_by_day_of_week:
-  select expenditure: sum total by day from
+avg_spending_by_day_of_week:
+  select avg_expenditure: avg total by day from
     select day: dayofweeknum date,total from dayspend
-save `:graphdata/spending_by_day_of_week.txt
+save `:graphdata/avg_spending_by_day_of_week.txt
 
 avg_number_of_spends_by_day_of_week:
   select avg_number_of_spends: avg numberofspends by day from
     select day: dayofweeknum date,numberofspends from dayspend
 save `:graphdata/avg_number_of_spends_by_day_of_week.txt
 
-total_spending: ([]
+avg_spent_per_spend_by_day_of_week:
+  select avg_spent_per_spend: avg[total % numberofspends] by day from
+    select day: dayofweeknum date,total,numberofspends from dayspend
+save `:graphdata/avg_spent_per_spend_by_day_of_week.txt
+
+moving_total_spending: ([]
   days_since_oct_1_2016: daycount;
   moving_total: exec (+\) total from dayspend)
-save `:graphdata/total_spending.txt
+save `:graphdata/moving_total_spending.txt
 
 \\
