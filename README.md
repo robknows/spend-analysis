@@ -19,16 +19,13 @@ save `:tables/shoptrip \ Depending on which dir you opened q from
 Then you need to update the dayspend table by running ./deploydayspend.q
 
 ### Graphs
-At the moment the only graphs you can create are plots for a set of x values against a set of y values.
+You can draw single line plots, single bar charts or double line plots.
 
-You control the graph from inside saveplotdata.q
+You control the graph data from inside saveplotdata.q, while the selection of
+graph is handled within plot.sh
 
 First you create a table. The name you give the saved table = the title of the graph.
 You can also name the x and y axes by changing the names of the column names in
 your table definition. The 1st column is the x axis and the 2nd is the y axis.
 
 After configuring the graphs you want drawn, run plot.sh and the pdfs will be created.
-
-At the moment there are graphs for a few exponential weighted moving averages
-with different smoothing factors, a normal moving average and a graph simply
-showing the expenditure for each day.
