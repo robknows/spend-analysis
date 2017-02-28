@@ -34,3 +34,19 @@ exportaspdf =: 3 : 0
   pd 'title ' , y
   pd 'pdf pdfs/', y ,'.pdf'
 )
+
+simpleplot =: 4 : 0
+  addtype  =: 'type ' , x
+  boxedfn  =: y
+  filedata =: lns readfile boxedfn
+
+  makewindow''
+
+  xlabel =: xcol onhead filedata
+  ylabel =: ycol onhead filedata
+  xlabel makelabels ylabel
+
+  pd addtype
+  makeplot filedata
+  exportaspdf fn boxedfn
+)
