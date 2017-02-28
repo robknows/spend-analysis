@@ -131,4 +131,19 @@ avg_daily_spend_by_month: 0!avg_daily_spend_by_month;
 avg_daily_spend_by_month: asc avg_daily_spend_by_month;
 save `:graphdata/avg_daily_spend_by_month.txt
 
+spending_by_class: desc (cs#s) upsert ([] class: `other;amount: value sum (cs:9)_s:desc select sum amount by class from shoptrip);
+total: exec sum amount from spending_by_class;
+spending_by_class: select class:class,amount:amount,proportion:100*amount%total from spending_by_class;
+save `:graphdata/spending_by_class.txt
+
+moving_avg_travel_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  mavg_amount_spent_on_travel: mavg[count dcs; dcs:dailyclassspend {`travel in x}])
+save `:graphdata/moving_avg_travel_spend_per_day.txt
+
+moving_avg_gym_spend_per_day: ([]
+  days_since_oct_1_2016: daycount;
+  mavg_amount_spent_on_gym: mavg[count dcs; dcs:dailyclassspend {`gym in x}])
+save `:graphdata/moving_avg_gym_spend_per_day.txt
+
 \\

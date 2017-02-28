@@ -1,0 +1,11 @@
+CLASS      AMOUNT  PROPORTION  
+travel     625.45  26.55794    
+gym        411.03  17.45321    
+holiday    351.2   14.9127     
+food       254.8   10.81935    
+eatingout  197.19  8.373106    
+other      158.09  6.712837    
+laundry    130     5.520076    
+gift       88.71   3.766815    
+devices    76      3.227121    
+snack      62.57   2.656855    

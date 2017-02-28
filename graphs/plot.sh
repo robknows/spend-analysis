@@ -2,6 +2,11 @@
 # Update data
 ./saveplotdata.q
 
+# Substitute for pie charts, remove these from line plotting dir
+mv graphdata/spending_by_class.txt displaytables/
+displaytables=`ls displaytables/*.txt`
+./formatQtable.ijs $displaytables
+
 # Single plot all data by default.
 # Plots meant for bar charts are overwritten by it later on.
 graphdata=`ls graphdata/*.txt`
