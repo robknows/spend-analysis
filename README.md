@@ -19,7 +19,7 @@ save `:tables/shoptrip \ Depending on which dir you opened q from
 Then you need to update the dayspend table by running ./deploydayspend.q
 
 ### Graphs
-You can draw single line plots, single bar charts or double line plots.
+You can draw single line plots, single bar charts, single pie charts or double line plots.
 
 You control the graph data from inside saveplotdata.q, while the selection of
 graph is handled within plot.sh
