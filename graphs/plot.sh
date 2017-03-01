@@ -2,13 +2,8 @@
 # Update data
 ./saveplotdata.q
 
-# Substitute for pie charts, remove these from line plotting dir
-mv graphdata/spending_by_class.txt displaytables/
-displaytables=`ls displaytables/*.txt`
-./formatQtable.ijs $displaytables
-
 # Single plot all data by default.
-# Plots meant for bar charts are overwritten by it later on.
+# Plots meant for other plot types are overwritten by them later on.
 graphdata=`ls graphdata/*.txt`
 ./makesingleplots.ijs $graphdata
 
@@ -17,3 +12,6 @@ graphdata=`ls graphdata/*.txt`
 
 # Selected bar charts
 ./makebarcharts.ijs graphdata/avg_spending_by_day_of_week.txt graphdata/avg_number_of_spends_by_day_of_week.txt graphdata/avg_spent_per_spend_by_day_of_week.txt graphdata/avg_daily_spend_by_month.txt
+
+# Selected pie charts
+./makepiecharts.ijs graphdata/spending_by_class.txt

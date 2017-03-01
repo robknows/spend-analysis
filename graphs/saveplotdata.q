@@ -132,8 +132,6 @@ avg_daily_spend_by_month: asc avg_daily_spend_by_month;
 save `:graphdata/avg_daily_spend_by_month.txt
 
 spending_by_class: desc (cs#s) upsert ([] class: `other;amount: value sum (cs:9)_s:desc select sum amount by class from shoptrip);
-total: exec sum amount from spending_by_class;
-spending_by_class: select class:class,amount:amount,proportion:100*amount%total from spending_by_class;
 save `:graphdata/spending_by_class.txt
 
 moving_avg_travel_spend_per_day: ([]
