@@ -27,6 +27,7 @@ snack
 stationary
 toiletries
 travel
+social
 \
 
 / 
