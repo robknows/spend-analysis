@@ -144,4 +144,8 @@ moving_avg_gym_spend_per_day: ([]
   mavg_amount_spent_on_gym: mavg[count dcs; dcs:dailyclassspend {`gym in x}])
 save `:graphdata/moving_avg_gym_spend_per_day.txt
 
+weekspends: {exec sum total from dayspend where date>=x,date<x+7} each (+[7]\)[23;2016.10.01]
+spending_by_week: ([] week_number: til count weekspends; total: weekspends)
+save `:graphdata/spending_by_week.txt
+
 \\
