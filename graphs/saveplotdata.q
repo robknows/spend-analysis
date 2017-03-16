@@ -4,19 +4,25 @@
 shoptrip: value `:../tables/shoptrip
 dayspend: value `:../tables/dayspend
 
+day_one: 2016.10.01
+n_weeks: -1 + "i" $ .143 * .z.D - day_one
+
 \ Functions
 classindices: {where x each shoptrip[`class]}
 shoptripindices:til count shoptrip
 dailyclassspend: {
   classspends:?[shoptripindices in classindices x;exec amount from shoptrip;0f];
-  shopdates: -[exec date from shoptrip;2016.10.01];
+  shopdates: -[exec date from shoptrip;day_one];
   value exec sum amount by date from ([] date:shopdates;amount:classspends)}
 
 tagindices: {where x each shoptrip[`tag]}
 dailytagspend: {
   tagspends:?[shoptripindices in tagindices x;exec amount from shoptrip;0f];
-  shopdates: -[exec date from shoptrip;2016.10.01];
+  shopdates: -[exec date from shoptrip;day_one];
   value exec sum amount by date from ([] date:shopdates;amount:tagspends)}
+
+weeklyclassspend: {
+  {[c;d] exec sum amount from shoptrip where date>=d,date<d+7,class=c}[x] each (+[7]\)[n_weeks;day_one]}
 
 \ x is integer version of a date
 dayofweeknum: {6 7 1 2 3 4 5 x mod 7}
@@ -48,6 +54,11 @@ moving_avg_daily_spending: ([]
   days_since_oct_1_2016:daycount;
   moving_avg:mavg[count totals;totals])
 save `:graphdata/moving_avg_daily_spending.txt
+
+seven_point_moving_avg_daily_spending: ([]
+  days_since_oct_1_2016:daycount;
+  moving_avg:mavg[7;totals])
+save `:graphdata/seven_point_moving_avg_daily_spending.txt
 
 daily_spending: ([]
   days_since_oct_1_2016: daycount;
@@ -147,5 +158,12 @@ save `:graphdata/moving_avg_gym_spend_per_day.txt
 weekspends: {exec sum total from dayspend where date>=x,date<x+7} each (+[7]\)[23;2016.10.01]
 spending_by_week: ([] week_number: til count weekspends; total: weekspends)
 save `:graphdata/spending_by_week.txt
+
+weeklyfoodspends: weeklyclassspend[`food]
+weekly_food_spend: ([] week_number: til count weeklyfoodspends; total: weeklyfoodspends)
+save `:graphdata/weekly_food_spend.txt
+
+moving_avg_weekly_food_spend: ([] week_number: til count weeklyfoodspends; total: mavg[count weeklyfoodspends;weeklyfoodspends])
+save `:graphdata/moving_avg_weekly_food_spend.txt
 
 \\
