@@ -1,2 +1,2 @@
-rm -f graphdata/*.txt
-rm -f pdfs/*.pdf
+rm -rf graphdata/
+rm -rf pdfs/

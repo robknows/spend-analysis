@@ -1,4 +1,8 @@
 #!/bin/bash
+# Make necessary directories
+mkdir graphdata
+mkdir pdfs
+
 # Update data
 ./saveplotdata.q
 
