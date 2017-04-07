@@ -22,6 +22,8 @@ medicine
 stationary
 toiletries
 travel
+tool
+admin
 ==LUXURY==
 alcohol
 book
