@@ -32,6 +32,7 @@ clothes
 gift
 holiday
 social
+furnishing
 ==NONE==
 none
 \
