@@ -95,10 +95,10 @@ gym_spend_per_day: ([]
   amount_spent_on_gym: dailyclassspend {`gym in x})
 save `:graphdata/gym_spend_per_day.txt
 
-milk_spend_per_milk_shop: ([]
+milk_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
-  amount_spent_on_shops_including_milk: dailyclassspend {`milk in x})
-save `:graphdata/milk_spend_per_milk_shop.txt
+  amount_spent_on_milk: dailyclassspend {`milk in x})
+save `:graphdata/milk_spend_per_day.txt
 
 eatingout_spend_per_day: ([]
   days_since_oct_1_2016: daycount;
