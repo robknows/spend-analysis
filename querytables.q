@@ -27,3 +27,6 @@ monthnum: {1 + ("i"$`month$x) mod 12}
 
 daycount: exec date from dayspend - 2016.10.01
 totals: exec total from dayspend
+
+/ round[.5] x rounds all values of x to the nearest .5
+round: {x*"j"$y%x}

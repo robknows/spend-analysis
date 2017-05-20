@@ -15,7 +15,7 @@ graphdata=`ls graphdata/*.txt`
 ./makedoubleplots.ijs graphdata/travel_spend_per_day.txt graphdata/gym_spend_per_day.txt graphdata/eatingout_spend_per_day.txt graphdata/imogen_spend_per_day.txt
 
 # Selected bar charts
-./makebarcharts.ijs graphdata/avg_spending_by_day_of_week.txt graphdata/avg_number_of_spends_by_day_of_week.txt graphdata/avg_spent_per_spend_by_day_of_week.txt graphdata/avg_daily_spend_by_month.txt
+./makebarcharts.ijs graphdata/avg_spending_by_day_of_week.txt graphdata/avg_number_of_spends_by_day_of_week.txt graphdata/avg_spent_per_spend_by_day_of_week.txt graphdata/avg_daily_spend_by_month.txt graphdata/dayspend_distribution.txt
 
 # Selected pie charts
 ./makepiecharts.ijs graphdata/spending_by_class.txt

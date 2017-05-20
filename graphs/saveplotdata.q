@@ -14,6 +14,7 @@ dailyclassspend: {
   classspends:?[shoptripindices in classindices x;exec amount from shoptrip;0f];
   shopdates: -[exec date from shoptrip;day_one];
   value exec sum amount by date from ([] date:shopdates;amount:classspends)}
+round: {x*"j"$y%x}
 
 tagindices: {where x each shoptrip[`tag]}
 dailytagspend: {
@@ -165,5 +166,8 @@ save `:graphdata/weekly_food_spend.txt
 
 moving_avg_weekly_food_spend: ([] week_number: til count weeklyfoodspends; total: mavg[count weeklyfoodspends;weeklyfoodspends])
 save `:graphdata/moving_avg_weekly_food_spend.txt
+
+dayspend_distribution: select frequency:count round[1] total by round[1] total from dayspend
+save `:graphdata/dayspend_distribution.txt
 
 \\
