@@ -170,4 +170,10 @@ save `:graphdata/moving_avg_weekly_food_spend.txt
 dayspend_distribution: select frequency:count round[1] total by round[1] total from dayspend
 save `:graphdata/dayspend_distribution.txt
 
+eating_spends:raze exec sum each amount from dayspend lj `date xgroup select from shoptrip where class in `food`snack`eatingout;
+moving_avg_all_eating_spend: ([]
+  days_since_oct_1_2016:daycount;
+  moving_avg:mavg[count eating_spends;eating_spends])
+save `:graphdata/moving_avg_all_eating_spend.txt
+
 \\
