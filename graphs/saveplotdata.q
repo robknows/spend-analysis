@@ -1,13 +1,17 @@
 #!/home/rob/q/l32/q
 
-\ Load tables
+// Load tables
+
 shoptrip: value `:../tables/shoptrip
 dayspend: value `:../tables/dayspend
+
+// Constants
 
 day_one: 2016.10.01
 n_weeks: -1 + "i" $ .143 * .z.D - day_one
 
-\ Functions
+// Functions
+
 classindices: {where x each shoptrip[`class]}
 shoptripindices:til count shoptrip
 dailyclassspend: {
@@ -22,99 +26,101 @@ dailytagspend: {
   shopdates: -[exec date from shoptrip;day_one];
   value exec sum amount by date from ([] date:shopdates;amount:tagspends)}
 
-weeklyclassspend: {
-  {[c;d] exec sum amount from shoptrip where date>=d,date<d+7,class=c}[x] each (+[7]\)[n_weeks;day_one]}
+weeklyclassspend: {{[c;d] exec sum amount from shoptrip where date>=d,date<d+7,class=c}[x] each (+[7]\)[n_weeks;day_one]}
 
-\ x is integer version of a date
+// x is integer version of a date
 dayofweeknum: {6 7 1 2 3 4 5 x mod 7}
 
-\ x is a date
+// x is a date
 monthnum: {1 + ("i"$`month$x) mod 12}
 
-\ Constants
+// Values
+
 daycount: exec date from dayspend - 2016.10.01
 totals: exec total from dayspend
 
-\ Data entries
-p05_exp_weighted_moving_avg_daily_spending: ([]
-  days_since_oct_1_2016:daycount;
-  ewma:ema[.05;totals])
-save `:graphdata/p05_exp_weighted_moving_avg_daily_spending.txt
+dailyalleatingspend:raze exec sum each amount from dayspend lj `date xgroup select from shoptrip where class in `food`snack`eatingout;
+dailyfoodspend:dailyclassspend {`food in x}
+dailytravelspend:dailyclassspend {`travel in x}
+dailygymspend:dailyclassspend {`gym in x}
+dailyeatingoutspend:dailyclassspend {`eatingout in x}
+dailymilkspend:dailyclassspend {`milk in x}
+dailyimogenspend:dailytagspend {`imogen in x}
 
-p1_exp_weighted_moving_avg_daily_spending: ([]
-  days_since_oct_1_2016:daycount;
-  ewma:ema[.1;totals])
-save `:graphdata/p1_exp_weighted_moving_avg_daily_spending.txt
+// ===== DATA SAVED BELOW =====
 
-p33_exp_weighted_moving_avg_daily_spending: ([]
-  days_since_oct_1_2016:daycount;
-  ewma:ema[.33;totals])
-save `:graphdata/p33_exp_weighted_moving_avg_daily_spending.txt
+// Raw per day amounts
 
-moving_avg_daily_spending: ([]
-  days_since_oct_1_2016:daycount;
-  moving_avg:mavg[count totals;totals])
-save `:graphdata/moving_avg_daily_spending.txt
+raw_per_day_spending:{[values;graphname]
+  graphname set ([]
+      days_since_oct_1_2016:daycount;
+      spent:values);
+  graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
+  filename}
 
-seven_point_moving_avg_daily_spending: ([]
-  days_since_oct_1_2016:daycount;
-  moving_avg:mavg[7;totals])
-save `:graphdata/seven_point_moving_avg_daily_spending.txt
+raw_per_day_spending[totals;`daily_spending]
+raw_per_day_spending[dailyfoodspend;`daily_food_spending]
+raw_per_day_spending[dailytravelspend;`daily_travel_spending]
+raw_per_day_spending[dailygymspend;`daily_gym_spending]
+raw_per_day_spending[dailymilkspend;`daily_milk_spending]
+raw_per_day_spending[dailyeatingoutspend;`daily_eatingout_spending]
+raw_per_day_spending[dailyclassspend {`gift in x};`daily_gift_spending]
+raw_per_day_spending[dailyimogenspend;`daily_imogen_spending]
 
-daily_spending: ([]
-  days_since_oct_1_2016: daycount;
-  day_spending:totals)
-save `:graphdata/daily_spending.txt
+// Whole period daily moving averages
 
-food_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_food: dailyclassspend {`food in x})
-save `:graphdata/food_spend_per_day.txt
+daily_moving_avg:{[values;graphname]
+  graphname set ([]
+      days_since_oct_1_2016:daycount;
+      moving_avg:mavg[count values;values]);
+  graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
+  filename}
 
-p05_exp_weighted_moving_avg_daily_food_spending: ([]
-  days_since_oct_1_2016:daycount;
-  ewma:ema[.05;dailyclassspend {`food in x}])
-save `:graphdata/p05_exp_weighted_moving_avg_daily_food_spending.txt
+daily_moving_avg[totals;`moving_avg_daily_spending]
+daily_moving_avg[dailyfoodspend;`moving_avg_food_spend_per_day]
+daily_moving_avg[dailytravelspend;`moving_avg_travel_spend_per_day]
+daily_moving_avg[dailygymspend;`moving_avg_gym_spend_per_day]
+daily_moving_avg[dailyalleatingspend;`moving_avg_all_eating_spend]
 
-moving_avg_food_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  mavg_amount_spent_on_food: mavg[count dcs; dcs:dailyclassspend {`food in x}])
-save `:graphdata/moving_avg_food_spend_per_day.txt
+// Whole period weekly moving averages
 
-travel_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_travel: dailyclassspend {`travel in x})
-save `:graphdata/travel_spend_per_day.txt
+weekly_moving_avg:{[values;graphname]
+  graphname set ([]
+      week_number: til count values;
+      moving_avg:mavg[count values;values]);
+  graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
+  filename}
 
-p1_exp_weighted_moving_avg_daily_travel_spending: ([]
-  days_since_oct_1_2016:daycount;
-  ewma:ema[.1;dailyclassspend {`travel in x}])
-save `:graphdata/p1_exp_weighted_moving_avg_daily_travel_spending.txt
+weekly_moving_avg[weeklyclassspend `food;`moving_avg_weekly_food_spend]
+weekly_moving_avg[weeklyclassspend `eatingout;`moving_avg_weekly_eatingout_spend]
 
-gym_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_gym: dailyclassspend {`gym in x})
-save `:graphdata/gym_spend_per_day.txt
+// Exponentially weighted moving averages
 
-milk_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_milk: dailyclassspend {`milk in x})
-save `:graphdata/milk_spend_per_day.txt
+exp_moving_avg:{[weight;values;graphname]
+  graphname set ([]
+      days_since_oct_1_2016:daycount;
+      ewma:ema[weight;values]);
+  graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
+  filename}
 
-eatingout_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_eatingout: dailyclassspend {`eatingout in x})
-save `:graphdata/eatingout_spend_per_day.txt
+exp_moving_avg[.05;totals;`p05_exp_weighted_moving_avg_daily_spending]
+exp_moving_avg[.1;totals;`p1_exp_weighted_moving_avg_daily_spending]
+exp_moving_avg[.33;totals;`p33_exp_weighted_moving_avg_daily_spending]
+exp_moving_avg[.05;dailyfoodspend;`p05_exp_weighted_moving_avg_daily_food_spending]
+exp_moving_avg[.05;dailytravelspend;`p1_exp_weighted_moving_avg_daily_travel_spending]
 
-gift_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_gift: dailyclassspend {`gift in x})
-save `:graphdata/gift_spend_per_day.txt
+// 7-day moving averages
 
-imogen_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  amount_spent_on_tiny_girl: dailytagspend {`imogen in x})
-save `:graphdata/imogen_spend_per_day.txt
+seven_day_moving_avg:{[values;graphname]
+  graphname set ([]
+      days_since_oct_1_2016:daycount;
+      moving_avg:mavg[7;values]);
+  graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
+  filename}
+
+seven_day_moving_avg[totals;`seven_day_moving_avg_daily_spending]
+
+// Bespoke pie/bar charts
 
 avg_spending_by_day_of_week:
   select avg_expenditure: avg total by day from
@@ -131,11 +137,6 @@ avg_spent_per_spend_by_day_of_week:
     select day: dayofweeknum date,total,numberofspends from dayspend
 save `:graphdata/avg_spent_per_spend_by_day_of_week.txt
 
-moving_total_spending: ([]
-  days_since_oct_1_2016: daycount;
-  moving_total: exec (+\) total from dayspend)
-save `:graphdata/moving_total_spending.txt
-
 avg_daily_spend_by_month: select avg total by month_number from select month_number:monthnum date,total from dayspend;
 empty_months: (1 + til 12) except exec month_number from avg_daily_spend_by_month;
 avg_daily_spend_by_month: 0!avg_daily_spend_by_month;
@@ -146,34 +147,7 @@ save `:graphdata/avg_daily_spend_by_month.txt
 spending_by_class: desc (cs#s) upsert ([] class: `other;amount: value sum (cs:11)_s:desc select sum amount by class from shoptrip);
 save `:graphdata/spending_by_class.txt
 
-moving_avg_travel_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  mavg_amount_spent_on_travel: mavg[count dcs; dcs:dailyclassspend {`travel in x}])
-save `:graphdata/moving_avg_travel_spend_per_day.txt
-
-moving_avg_gym_spend_per_day: ([]
-  days_since_oct_1_2016: daycount;
-  mavg_amount_spent_on_gym: mavg[count dcs; dcs:dailyclassspend {`gym in x}])
-save `:graphdata/moving_avg_gym_spend_per_day.txt
-
-weekspends: {exec sum total from dayspend where date>=x,date<x+7} each (+[7]\)[23;2016.10.01]
-spending_by_week: ([] week_number: til count weekspends; total: weekspends)
-save `:graphdata/spending_by_week.txt
-
-weeklyfoodspends: weeklyclassspend[`food]
-weekly_food_spend: ([] week_number: til count weeklyfoodspends; total: weeklyfoodspends)
-save `:graphdata/weekly_food_spend.txt
-
-moving_avg_weekly_food_spend: ([] week_number: til count weeklyfoodspends; total: mavg[count weeklyfoodspends;weeklyfoodspends])
-save `:graphdata/moving_avg_weekly_food_spend.txt
-
-dayspend_distribution: select frequency:count round[1] total by round[1] total from dayspend
+dayspend_distribution: select frequency:count amount by amount from select amount:ceiling total,date,numberofspends from dayspend
 save `:graphdata/dayspend_distribution.txt
 
-eating_spends:raze exec sum each amount from dayspend lj `date xgroup select from shoptrip where class in `food`snack`eatingout;
-moving_avg_all_eating_spend: ([]
-  days_since_oct_1_2016:daycount;
-  moving_avg:mavg[count eating_spends;eating_spends])
-save `:graphdata/moving_avg_all_eating_spend.txt
-
-\\
+exit 0
