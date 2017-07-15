@@ -11,12 +11,48 @@ shoptrip table. Following from this, all new data is entered in the shoptrip
 table. Days with no spending are entered as having amount 0f and the keyword
 tag in none.
 
-To insert new data, in the q REPL, run (replacing the fake data with your actual data of course):
+To insert new data, run `./enterData`. Example of me using it:
+
 ```
-`shoptrip insert (amount: 1 2 3 ... ;date: 2017.01.18 2017.01.19 ... ;class: `food`bike`travel ... ;tag: ```imogen``idiocy)
-save `:tables/shoptrip \ Depending on which dir you opened q from
+rob@rob-Lenovo-Z50-75:~/Documents/spend-analysis$ ./enterData.sh 
+b = step back, f = step forward, s = submit now
+
+Enter amount(s), whose current value is -
+14.63 2.8
+Enter date(s), whose current value is -
+2017.07.15
+Enter class(es), whose current value is -
+`eatingout`alcohol
+Enter tag(s), whose current value is -
+`imogen`
+#!/home/rob/q/l32/q
+shoptrip: value`:tables/shoptrip
+`shoptrip insert (amount:14.63 2.8f;date:2017.07.15;class:`eatingout`alcohol;tag:`imogen`)
+save `:tables/shoptrip
+exit 0
+Do you want to continue? (s = show generated q file again, y = yes, n = no).y
+KDB+ 3.4 2016.12.08 Copyright (C) 1993-2016 Kx Systems
+l32/ 4()core 6906MB rob rob-lenovo-z50-75 127.0.1.1 NONEXPIRE  
+
+Welcome to kdb+ 32bit edition
+For support please see http://groups.google.com/d/forum/personal-kdbplus
+Tutorials can be found at http://code.kx.com/wiki/Tutorials
+To exit, type \\
+To remove this startup msg, edit q.q
+777 778
+`:tables/shoptrip
+KDB+ 3.4 2016.12.08 Copyright (C) 1993-2016 Kx Systems
+l32/ 4()core 6906MB rob rob-lenovo-z50-75 127.0.1.1 NONEXPIRE  
+
+Welcome to kdb+ 32bit edition
+For support please see http://groups.google.com/d/forum/personal-kdbplus
+Tutorials can be found at http://code.kx.com/wiki/Tutorials
+To exit, type \\
+To remove this startup msg, edit q.q
+`:tables/dayspend
+rob@rob-Lenovo-Z50-75:~/Documents/spend-analysis$
 ```
-Then you need to update the dayspend table by running ./deploydayspend.q
+
 
 ### Graphs
 You can draw single line plots, single bar charts, single pie charts or double line plots.
