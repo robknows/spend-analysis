@@ -80,7 +80,7 @@ daily_moving_avg[totals;`moving_avg_daily_spending]
 daily_moving_avg[dailyfoodspend;`moving_avg_food_spend_per_day]
 daily_moving_avg[dailytravelspend;`moving_avg_travel_spend_per_day]
 daily_moving_avg[dailygymspend;`moving_avg_gym_spend_per_day]
-daily_moving_avg[dailyalleatingspend;`moving_avg_all_eating_spend]
+daily_moving_avg[dailyalleatingspend;`moving_avg_all_eating_spending]
 
 // Whole period weekly moving averages
 
@@ -91,8 +91,10 @@ weekly_moving_avg:{[values;graphname]
   graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
   filename}
 
-weekly_moving_avg[weeklyclassspend `food;`moving_avg_weekly_food_spend]
-weekly_moving_avg[weeklyclassspend `eatingout;`moving_avg_weekly_eatingout_spend]
+weeklyalleatingspend:exec sum each amount from `weekNum xgroup update weekNum:(date - 2016.10.01) div 7 from select from shoptrip where class in `snack`eatingout`food
+weekly_moving_avg[weeklyclassspend `food;`moving_avg_weekly_food_spending]
+weekly_moving_avg[weeklyclassspend `eatingout;`moving_avg_weekly_eatingout_spending]
+weekly_moving_avg[weeklyalleatingspend;`moving_avg_weekly_all_eating_spending]
 
 // Exponentially weighted moving averages
 
@@ -119,6 +121,8 @@ seven_day_moving_avg:{[values;graphname]
   filename}
 
 seven_day_moving_avg[totals;`seven_day_moving_avg_daily_spending]
+seven_day_moving_avg[dailyalleatingspend;`seven_day_moving_avg_all_eating_spending]
+seven_day_moving_avg[dailytravelspend;`seven_day_moving_avg_daily_travel_spending]
 
 // Bespoke pie/bar charts
 
