@@ -42,7 +42,7 @@ NB. x = column name
 NB. y = semi-colon seperated column items
 itemsdeclaration =: 4 : 'x,''_items: ('', y ,'')'''
 
-hashbang =: '#!/home/rob/q/l32/q'
+hashbang =: '#!/home/ubuntu/q/l32/q'
 amountdec =: amountheader itemsdeclaration amountdata
 datedec =: dateheader itemsdeclaration datedata
 classdec =: classheader itemsdeclaration classdata
@@ -55,6 +55,6 @@ savetable =: 'save `:shoptripbackup'
 exitcommand =: '\\'
 
 content =: hashbang,LF,columndefs,LF,tabledef,LF,savetable,LF,exitcommand
-content writefile (<'/home/rob/Documents/spend_analysis/backup/makeshoptripbackup.q')
+content writefile (<'/home/rob/spend-analysis/backup/makeshoptripbackup.q')
 
 exit''

@@ -1,4 +1,4 @@
-#!/home/rob/q/l32/q
+#!/home/ubuntu/q/l32/q
 
 shoptrip: value`:../tables/shoptrip
 
@@ -9,6 +9,6 @@ ts: `empty^shoptrip[`tag]
 
 prepped: ([] amount:ams; date:ds; class:cs; tag:ts)
 
-save `:prepped.txt
+save `:prepped.txt;
 
 \\
