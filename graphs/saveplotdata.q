@@ -39,7 +39,7 @@ monthnum: {1 + ("i"$`month$x) mod 12}
 daycount: exec date from dayspend - 2016.10.01
 totals: exec total from dayspend
 
-dailyalleatingspend:raze exec sum each amount from dayspend lj `date xgroup select from shoptrip where class in `food`snack`eatingout;
+dailyalleatingspend:raze exec sum each amount from dayspend lj `date xgroup select from shoptrip where class in `food`snack`eatingout`milk;
 dailyfoodspend:dailyclassspend {`food in x}
 dailytravelspend:dailyclassspend {`travel in x}
 dailygymspend:dailyclassspend {`gym in x}
@@ -91,7 +91,7 @@ weekly_moving_avg:{[values;graphname]
   graphname save filename:hsym `$"graphdata/",string[graphname],".txt";
   filename}
 
-weeklyalleatingspend:exec sum each amount from `weekNum xgroup update weekNum:(date - 2016.10.01) div 7 from select from shoptrip where class in `snack`eatingout`food
+weeklyalleatingspend:exec sum each amount from `weekNum xgroup update weekNum:(date - 2016.10.01) div 7 from select from shoptrip where class in `snack`eatingout`food`milk
 weekly_moving_avg[weeklyclassspend `food;`moving_avg_weekly_food_spending]
 weekly_moving_avg[weeklyclassspend `eatingout;`moving_avg_weekly_eatingout_spending]
 weekly_moving_avg[weeklyalleatingspend;`moving_avg_weekly_all_eating_spending]
@@ -124,7 +124,10 @@ seven_day_moving_avg[totals;`seven_day_moving_avg_daily_spending]
 seven_day_moving_avg[dailyalleatingspend;`seven_day_moving_avg_all_eating_spending]
 seven_day_moving_avg[dailytravelspend;`seven_day_moving_avg_daily_travel_spending]
 
-// Bespoke pie/bar charts
+// Bespoke
+
+monthly_spending:`months_since_oct_2016`total xcols update months_since_oct_2016:til count monthlySpending from monthlySpending:select sum each total from grouped:`date xgroup select `month$date,total from dayspend
+save `:graphdata/monthly_spending.txt
 
 avg_spending_by_day_of_week:
   select avg_expenditure: avg total by day from
