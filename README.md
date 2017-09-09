@@ -1,3 +1,5 @@
+(Not being updated anymore for now - I want to spend more time on other stuff)
+
 # Q spend analysis with graphing in J
 
 ## Making it work
